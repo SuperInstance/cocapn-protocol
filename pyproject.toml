@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cocapn-protocol"
+version = "0.1.0"
+description = "A unified communication protocol for the Cocapn fleet"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cocapn_protocol"]
