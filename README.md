@@ -1,29 +1,40 @@
-# 📡 cocapn-protocol
+# cocapn-protocol
 
-Cocapn fleet protocol module — message formats, wire protocols, and communication standards.
+Messaging protocol for the Cocapn Fleet — envelopes, bottles, messages, and deadband routing for inter-agent communication.
 
-## Install
+## What This Gives You
+
+- **FleetMessage** — typed messages with sender, recipient, priority, and tracing
+- **FleetEnvelope** — routing wrapper with hop count, return path, and SHA-256 checksums
+- **Bottle** — message container for async fleet delivery
+- **DeadbandRouter** — suppresses duplicate messages within a configurable deadband window
+
+## Quick Start
 
 ```bash
 pip install cocapn-protocol
+
+from cocapn_protocol import FleetMessage, FleetEnvelope, Priority
+
+msg = FleetMessage(
+    sender="scout-alpha",
+    recipient="keeper-beta",
+    payload={"action": "report", "status": "nominal"},
+    priority=Priority.NORMAL
+)
+envelope = FleetEnvelope(message=msg)
+envelope.verify()  # Checks SHA-256 checksum integrity
 ```
 
-## What It Does
+## How It Fits
 
-Defines message formats and wire protocols for fleet communication. Standard interfaces for all inter-agent messaging.
+The communication layer for the Cocapn Fleet. Part of the SuperInstance ecosystem.
 
-### Key Features
-
-- **Message Formats** — Standard fleet message schemas
-- **Wire Protocols** — Binary and JSON protocol definitions
-- **Channel Types** — DM, broadcast, room, and bottle message types
-- **Protocol Versioning** — Backward-compatible protocol evolution
-
-## Part of the Cocapn Fleet
-
-- [bottle-protocol](https://github.com/cocapn/bottle-protocol) — Git-native messaging
-- [synclink-protocol](https://github.com/cocapn/synclink-protocol) — Binary edge sync
+Related repos:
+- [cocapn-identity](https://github.com/SuperInstance/cocapn-identity) — agent identity management
+- [cocapn-core](https://github.com/SuperInstance/cocapn-core) — core fleet library
+- [cocapn-telemetry](https://github.com/SuperInstance/cocapn-telemetry) — fleet observability
 
 ## License
 
-MIT
+Apache 2.0
